@@ -1,0 +1,14 @@
+.popup__error {
+    font-size: 12px;
+    font-weight: 400;
+    color: #ff0000;
+    opacity: 0;
+    max-width: 358px;
+    line-height: 14.5px;
+    margin: 0;
+    min-height: 30px;
+}
+
+.popup__error_visible {
+    opacity: 1;
+}
