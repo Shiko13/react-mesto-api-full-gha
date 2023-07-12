@@ -20,7 +20,7 @@ mongoose.connect(DB_URL, {
 });
 
 app.use(helmet());
-app.use(routes);
+app.use('/api', routes);
 
 app.use(errors());
 app.use(errorHandler);
