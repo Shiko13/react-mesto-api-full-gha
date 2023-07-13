@@ -12,7 +12,6 @@ function PopupWithForm({ name, title, isOpen, onClose, buttonText, children, onS
         <form
           className={`popup__form popup__edit-form`}
           name={name}
-          noValidate
           onSubmit={onSubmit}
         >
           {children}

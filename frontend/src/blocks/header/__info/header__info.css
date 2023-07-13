@@ -1,0 +1,5 @@
+.header__info {
+  display: flex;
+  padding: 0;
+  gap: 24px;
+}

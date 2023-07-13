@@ -4,29 +4,27 @@ import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup(props) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [values, setValues] = useState({});
   const currentUser = React.useContext(CurrentUserContext);
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   useEffect(() => {
-        setName(currentUser.name);
-        setDescription(currentUser.about);
+    setValues({ name: currentUser.name, description: currentUser.about });
   }, [currentUser, props.isOpen]);
-
-  function handleEditName(e) {
-    setName(e.target.value);
-  }
-
-  function handleEditDescription(e) {
-    setDescription(e.target.value);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
     props.onUpdateUser({
-      name,
-      about: description
+      name: values.name,
+      about: values.description
     });
   }
 
@@ -48,21 +46,21 @@ function EditProfilePopup(props) {
         minLength="2"
         maxLength="40"
         required
-        value={name || ""}
-        onChange={handleEditName}
+        value={values.name ?? ""}
+        onChange={handleChange}
       />
       <span id="input-edit-title-error" className="popup__error"></span>
       <input
         className="popup__input popup__input_type_subtitle"
         type="text"
-        name="about"
+        name="description"
         placeholder="Занятие"
         id="input-edit-subtitle"
         minLength="2"
         maxLength="200"
         required
-        value={description || ""}
-        onChange={handleEditDescription}
+        value={values.description ?? ""}
+        onChange={handleChange}
       />
       <span id="input-edit-subtitle-error" className="popup__error"></span>
     </PopupWithForm>
