@@ -1,7 +1,7 @@
 export const url = "https://s-al-terentev.nomoredomains.work/";
 
 export const authorizate = (email, password) => {
-  return fetch(`${url}/signin`, {
+  return fetch(`${url}/sign-in`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -12,7 +12,7 @@ export const authorizate = (email, password) => {
 };
 
 export const registrate = (email, password) => {
-  return fetch(`${url}/signup`, {
+  return fetch(`${url}/sign-up`, {
     method: "POST",
     headers: {
       Accept: "application/json",
