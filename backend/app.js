@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
+const rateLimit = require('express-rate-limit')
 const errorHandler = require('./errors/ErrorHandler');
 const routes = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -20,6 +21,14 @@ mongoose.connect(DB_URL, {
   console.log('Connected to database "mestodb"');
 });
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use(limiter);
 app.use(helmet());
 app.use(requestLogger);
 app.use(routes);
