@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+
+const { NODE_ENV = 'production', JWT_SECRET = 'JWT_SECRET' } = process.env;
 const AuthorizationError = require('../errors/AuthorizationError');
 
 const extractBearerToken = (header) => header.replace('Bearer ', '');
@@ -14,7 +16,7 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'super-strong-secret');
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret');
   } catch (err) {
     return next(new AuthorizationError('Неправильные почта или пароль'));
   }
