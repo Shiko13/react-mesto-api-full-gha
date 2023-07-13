@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 158.160.55.54
 
-Frontend https://...
+Frontend http://s-al-terentev.nomoredomains.work/
 
-Backend https://...
+Backend http://s-al-terentev.nomoredomains.work/
