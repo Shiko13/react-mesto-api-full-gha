@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 const errorHandler = require('./errors/ErrorHandler');
 const routes = require('./routes/index');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
@@ -20,8 +21,9 @@ mongoose.connect(DB_URL, {
 });
 
 app.use(helmet());
+app.use(requestLogger);
 app.use(routes);
-
+app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
