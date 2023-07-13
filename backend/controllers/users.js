@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { NODE_ENV = 'production', JWT_SECRET = 'JWT_SECRET' } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 const DuplicateError = require('../errors/DuplicateError');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
@@ -123,7 +123,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       res.send({
         token: jwt.sign({ _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret',
+          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
           { expiresIn: '7d' }),
       });
     })
