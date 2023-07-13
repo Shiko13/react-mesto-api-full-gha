@@ -7,6 +7,7 @@ const rateLimit = require('express-rate-limit');
 const errorHandler = require('./errors/ErrorHandler');
 const routes = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+require('dotenv').config();
 
 const app = express();
 
