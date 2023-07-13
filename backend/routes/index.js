@@ -7,6 +7,12 @@ const NotFoundError = require('../errors/NotFoundError');
 const userRoutes = require('./users');
 const cardRoutes = require('./cards');
 
+router.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 router.post('/signin', validateSignIn, login);
 router.post('/signup', validateCreationUser, createUser);
 router.use(auth);
