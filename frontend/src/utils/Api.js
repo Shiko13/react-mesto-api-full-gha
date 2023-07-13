@@ -73,9 +73,6 @@ class Api {
 
 const api = new Api({
   baseUrl: "https://http://s-al-terentev.nomoredomains.work/",
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 export default api;
