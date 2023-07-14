@@ -72,7 +72,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://http://s-al-terentev.nomoredomains.work/",
+  baseUrl: "https://http://s-al-terentev.nomoredomains.work",
 });
 
 export default api;
