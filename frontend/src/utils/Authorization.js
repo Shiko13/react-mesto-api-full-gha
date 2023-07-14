@@ -33,6 +33,7 @@ export const checkToken = (token) => {
 };
 
 const checkResponse = (res) => {
+  console.log(res);
   if (!res.ok) {
     return res
       .json()
