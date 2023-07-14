@@ -117,7 +117,7 @@ module.exports.updateAvatar = (req, res, next) => {
 };
 
 module.exports.login = (req, res, next) => {
-  console.log(res);
+  console.log('module.exports.login ', res);
   const { email, password } = req.body;
 
   User.findUserByCredentials(email, password)

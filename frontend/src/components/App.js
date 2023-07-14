@@ -51,7 +51,7 @@ function App() {
     if (jwt) {
       checkToken(jwt)
         .then((res) => {
-          console.log(res);
+          console.log('useEffect ', res);
           if (res) {
             setEmail(res.data.email);
             setIsLoggedIn(true);
