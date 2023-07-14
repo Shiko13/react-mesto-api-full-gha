@@ -157,6 +157,7 @@ function App() {
   function handleLogin(email, password) {
     authorizate(email, password)
       .then((res) => {
+        console.log('handleLogin', res);
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
