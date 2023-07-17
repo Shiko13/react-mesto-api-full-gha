@@ -72,7 +72,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://http://s-al-terentev.nomoredomains.work",
+  baseUrl: "http://api.s-al-terentev.nomoredomains.work",
   headers: {
     "Content-Type": "application/json",
   },
