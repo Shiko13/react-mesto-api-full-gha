@@ -1,7 +1,7 @@
 export const url = "https://s-al-terentev.nomoredomains.work";
 
 export const authorizate = (email, password) => {
-  return fetch(`${url}/sign-in`, {
+  return fetch(`${url}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

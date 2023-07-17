@@ -145,7 +145,7 @@ function App() {
       .then(() => {
         setInfoTooltipImage(success);
         setInfoTooltipText("Вы успешно зарегистрировались!");
-        navigate("/sign-in", { replace: true });
+        navigate("/signin", { replace: true });
       })
       .catch((res) => {
         setInfoTooltipImage(error);
@@ -176,7 +176,7 @@ function App() {
     localStorage.removeItem("jwt");
     setEmail("");
     setIsLoggedIn(false);
-    navigate("/sign-in", { replace: true });
+    navigate("/signin", { replace: true });
   }
 
   const closeAllPopups = () => {
@@ -199,7 +199,7 @@ function App() {
                   text="Выйти"
                   email={email}
                   onClick={handleSignOut}
-                  path="/sign-in"
+                  path="/signin"
                 />
                 <ProtectedRoute
                   element={Main}
@@ -216,19 +216,19 @@ function App() {
             }
           />
           <Route
-            path="/sign-up"
+            path="/signup"
             element={
               <>
-                <Header text="Вход" path="/sign-in" />
+                <Header text="Вход" path="/signin" />
                 <Register onRegister={handleRegistration} />
               </>
             }
           />
           <Route
-            path="/sign-in"
+            path="/signin"
             element={
               <>
-                <Header text="Регистрация" path="/sign-up" />
+                <Header text="Регистрация" path="/signup" />
                 <Login onLogin={handleLogin} />
               </>
             }
@@ -236,7 +236,7 @@ function App() {
           <Route
             path="*"
             element={
-              <Navigate to={isLoggedIn ? "/" : "/sign-in"}/>
+              <Navigate to={isLoggedIn ? "/" : "/signin"}/>
             }
           />
         </Routes>

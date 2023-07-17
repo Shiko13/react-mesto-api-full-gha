@@ -44,7 +44,7 @@ function Register({ onRegister }) {
         </form>
         <p className="register__link">
           Уже зарегистрированы? 
-          <Link to="/sign-in" className="register__hyperlink">
+          <Link to="/signin" className="register__hyperlink">
             {" "}Войти
           </Link>
         </p>
