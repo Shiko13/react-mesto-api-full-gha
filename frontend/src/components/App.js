@@ -144,8 +144,11 @@ function App() {
   function handleRegistration(email, password) {
     registrate(email, password)
       .then(() => {
+        console.log('setInfoTooltipImage(success)');
         setInfoTooltipImage(success);
+        console.log('setInfoTooltipText("Вы успешно зарегистрировались!")');
         setInfoTooltipText("Вы успешно зарегистрировались!");
+        console.log('navigate("/signin", { replace: true })');
         navigate("/signin", { replace: true });
       })
       .catch((res) => {
