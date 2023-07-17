@@ -44,5 +44,6 @@ const checkResponse = (res) => {
         return Promise.reject(`Ошибка: ${res.data.error || res.data.message}`);
       });
   }
-  return res.json();
+  let temp = res.json();
+  return temp;
 };
