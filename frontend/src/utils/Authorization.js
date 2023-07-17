@@ -44,6 +44,5 @@ const checkResponse = (res) => {
         return Promise.reject(`Ошибка: ${res.data.error || res.data.message}`);
       });
   }
-  console.log('checkResponse to json', res.json());
   return res.json();
 };
