@@ -55,7 +55,8 @@ function App() {
         .then((res) => {
           console.log('useEffect ', res);
           if (res) {
-            setEmail(res.data.email);
+            console.log('email:', res.user.email);
+            setEmail(res.user.email);
             setIsLoggedIn(true);
             navigate("/", { replace: true });
           }
