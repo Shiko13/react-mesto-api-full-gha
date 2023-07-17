@@ -1,4 +1,4 @@
-export const url = "https://s-al-terentev.nomoredomains.work";
+export const url = "https://api.s-al-terentev.nomoredomains.work";
 
 export const authorizate = (email, password) => {
   return fetch(`${url}/signin`, {
