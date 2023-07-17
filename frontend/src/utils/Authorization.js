@@ -11,7 +11,7 @@ export const authorizate = (email, password) => {
 };
 
 export const registrate = (email, password) => {
-  return fetch(`${url}/sign-up`, {
+  return fetch(`${url}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
