@@ -45,6 +45,7 @@ function App() {
             setEmail(res.user.email);
             // localStorage.setItem("jwt", res.token);
             setIsLoggedIn(true);
+            console.log('inside checkToken');
             navigate("/", { replace: true });
           }
         })
