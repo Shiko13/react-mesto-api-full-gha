@@ -43,7 +43,7 @@ function App() {
         .then((res) => {
           if (res) {
             setEmail(res.user.email);
-            // localStorage.setItem("jwt", res.token);
+            localStorage.setItem("jwt", res.token);
             setIsLoggedIn(true);
             console.log('inside checkToken');
             navigate("/", { replace: true });
