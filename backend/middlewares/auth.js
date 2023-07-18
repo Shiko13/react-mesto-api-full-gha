@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET = 'dev-secret' } = process.env;
+const { NODE_ENV = 'production', JWT_SECRET = 'dev-secret' } = process.env;
 const AuthorizationError = require('../errors/AuthorizationError');
 
 const extractBearerToken = (header) => header.replace('Bearer ', '');
