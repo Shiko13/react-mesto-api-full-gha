@@ -37,26 +37,14 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    isLoggedIn &&
-      Promise.all([api.getInfoAboutMe(), api.getCards()])
-        .then(([info, cards]) => {
-          setCurrentUser(info);
-          setCards(cards);
-        })
-        .catch((err) => console.log(err));
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    console.log('start useEffect');
     const jwt = localStorage.getItem("jwt");
-    console.log(jwt);
     if (jwt) {
       checkToken(jwt)
         .then((res) => {
-          console.log('useEffect ', res);
           if (res) {
-            console.log('email:', res.user.email);
             setEmail(res.user.email);
+            console.log('isLoggedIn - true');
+            localStorage.setItem("jwt", res.token);
             setIsLoggedIn(true);
             navigate("/", { replace: true });
           }
@@ -66,6 +54,20 @@ function App() {
         });
     }
   });
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      Promise.all([api.getInfoAboutMe(), api.getCards()])
+        .then(([currentUser, cards]) => {
+          console.log('currentUser:', currentUser);
+          console.log('cards:', cards);
+          setCurrentUser(currentUser);
+          setCards(cards);
+        })
+        .catch((err) => console.log(err));
+     }
+  },    
+  [isLoggedIn]);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -144,11 +146,8 @@ function App() {
   function handleRegistration(email, password) {
     registrate(email, password)
       .then(() => {
-        console.log('setInfoTooltipImage(success)');
         setInfoTooltipImage(success);
-        console.log('setInfoTooltipText("Вы успешно зарегистрировались!")');
         setInfoTooltipText("Вы успешно зарегистрировались!");
-        console.log('navigate("/signin", { replace: true })');
         navigate("/signin", { replace: true });
       })
       .catch((res) => {
@@ -161,7 +160,6 @@ function App() {
   function handleLogin(email, password) {
     authorizate(email, password)
       .then((res) => {
-        console.log('handleLogin', res);
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);

@@ -33,7 +33,6 @@ export const checkToken = (token) => {
 };
 
 const checkResponse = (res) => {
-  console.log('checkResponse', res);
   if (!res.ok) {
     return res
       .json()
@@ -44,6 +43,5 @@ const checkResponse = (res) => {
         return Promise.reject(`Ошибка: ${res.data.error || res.data.message}`);
       });
   }
-  let temp = res.json();
-  return temp;
+  return res.json();
 };
