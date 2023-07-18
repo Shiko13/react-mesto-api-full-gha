@@ -21,8 +21,6 @@ export const registrate = (email, password) => {
 };
 
 export const checkToken = (token) => {
-  console.log('token in checkToken: ', token);
-  console.log(`next fetch to ${url}/users/me`);
   return fetch(`${url}/users/me`, {
     method: "GET",
     headers: {
