@@ -19,7 +19,7 @@ module.exports.getUserInfo = (req, res, next) => {
   console.log('getUserInfo', req);
   User.findById(req.user._id)
     .orFail(() => new NotFoundError('Пользователь с указанным id не существует'))
-    .then((user) => res.send({ user }))
+    .then((user) => res.send(user))
     .catch(next);
 };
 
