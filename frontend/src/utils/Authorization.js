@@ -16,7 +16,7 @@ _checkResponse(res) {
 }
 
 authorizate = (email, password) => {
-  return this._request(`${this._url}/signin`, {
+  return this._request(`${this.url}/signin`, {
     method: "POST",
     headers: this.headers,
     body: JSON.stringify({ email, password }),
@@ -24,7 +24,7 @@ authorizate = (email, password) => {
 };
 
 registrate = (email, password) => {
-  return this._request(`${this._url}/signup`, {
+  return this._request(`${this.url}/signup`, {
     method: "POST",
     headers: this.headers,
     body: JSON.stringify({ email, password }),
@@ -32,7 +32,7 @@ registrate = (email, password) => {
 };
 
 checkToken(jwt) {
-  return this._request(`${this._url}/users/me`, {
+  return this._request(`${this.url}/users/me`, {
     method: "GET",
     headers: {
       ...this.headers,

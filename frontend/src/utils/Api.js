@@ -16,7 +16,7 @@ class Api {
   }
 
   addCard(newCardData) {
-    return this._request(`${this._url}/cards`, {
+    return this._request(`${this.url}/cards`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({ name: newCardData.name, link: newCardData.link }),
@@ -24,19 +24,19 @@ class Api {
   }
 
   getInfoAboutMe() {
-    return this._request(`${this._url}/users/me`, {
+    return this._request(`${this.url}/users/me`, {
       headers: this.headers,
     });
   }
 
   getCards() {
-    return this._request(`${this._url}/cards`, {
+    return this._request(`${this.url}/cards`, {
       headers: this.headers,
     });
   }
 
   updateProfileData(data) {
-    return this._request(`${this._url}/users/me`, {
+    return this._request(`${this.url}/users/me`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({ name: data.name, about: data.about }),
@@ -45,12 +45,12 @@ class Api {
 
   changeLikeCardStatus(id, isLiked) {
     if (!isLiked) {
-      return this._request(`${this._url}/cards/${id}/likes`, {
+      return this._request(`${this.url}/cards/${id}/likes`, {
         method: "PUT",
         headers: this.headers,
       });
     } else {
-      return this._request(`${this._url}/cards/${id}/likes`, {
+      return this._request(`${this.url}/cards/${id}/likes`, {
         method: "DELETE",
         headers: this._headers,
       });
@@ -58,7 +58,7 @@ class Api {
   }
 
   updateProfileAvatar(data) {
-    return this._request(`${this._url}/users/me/avatar`, {
+    return this._request(`${this.url}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
@@ -68,7 +68,7 @@ class Api {
   }
 
   deleteCard(cardId) {
-    return this._request(`${this._url}/cards/${cardId}`, {
+    return this._request(`${this.url}/cards/${cardId}`, {
       method: "DELETE",
       headers: this.headers,
     });
