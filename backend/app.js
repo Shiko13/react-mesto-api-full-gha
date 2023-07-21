@@ -40,10 +40,10 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-app.use((_, res, next) => {
-  res.setHeader('Content-Type', 'application/json');
-  next();
-});
+// app.use((_, res, next) => {
+//   res.setHeader('Content-Type', 'application/json');
+//   next();
+// });
 
 app.use(helmet());
 app.use(cookieParser());
