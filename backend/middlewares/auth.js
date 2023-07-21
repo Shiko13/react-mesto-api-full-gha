@@ -7,8 +7,6 @@ const nodeEnv = process.env.NODE_ENV;
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log('auth:', authorization);
-  console.log('req:', req);
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return next(new AuthorizationError('Неправильные почта или пароль-1'));

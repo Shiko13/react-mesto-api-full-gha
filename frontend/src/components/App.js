@@ -30,44 +30,41 @@ function App() {
   const [infoTooltipText, setInfoTooltipText] = useState("");
   const [infoTooltipImage, setInfoTooltipImage] = useState("");
   const [email, setEmail] = useState("");
+  const token = localStorage.getItem("JWT_SECRET");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("JWT_SECRET");
-    if (token && email == null) {
+    if (token) {
       Auth.checkToken(token)
         .then((res) => {
           if (res) {
-            setEmail(res.user.email);
             setIsLoggedIn(true);
+            ApiConst.setToken(token);
             navigate("/", { replace: true });
           }
         })
         .catch((err) => {
           console.log(err);
         });
+      }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return;
     }
-  });
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      ApiConst.getCards()
-        .then(({ cards }) => setCards(cards))
-        .catch((err) => console.log(err));
-     }
-  },    
-  [isLoggedIn]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      ApiConst.getInfoAboutMe()
-        .then((user) => { 
-          setCurrentUser(user)
-        })
-        .catch((err) => console.log(err));
-     }
-  },    
-  [isLoggedIn]);
+    Promise.all([ApiConst.getCards(), ApiConst.getInfoAboutMe()])
+      .then(([{ cards }, user]) => {
+        setCards(cards);
+        setCurrentUser(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }, [isLoggedIn]);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);

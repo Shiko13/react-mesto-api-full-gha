@@ -6,8 +6,6 @@ class Api {
   }
 
   _request(url, options) {
-    console.log('url', url);
-    console.log('options', options);
     return fetch(url, options).then(this._checkResponse);
   }
 
@@ -32,14 +30,12 @@ class Api {
   }
 
   getInfoAboutMe() {
-    console.log('getInfoAboutMe(), headers: ', this.headers);
     return this._request(`${this.url}/users/me`, {
       headers: this.headers,
     });
   }
 
   getCards() {
-    console.log('getCards(), headers: ', this.headers);
     return this._request(`${this.url}/cards`, {
       headers: this.headers,
     });

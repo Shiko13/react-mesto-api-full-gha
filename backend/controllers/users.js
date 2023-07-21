@@ -16,7 +16,6 @@ module.exports.getAllUsers = (req, res, next) => {
 };
 
 module.exports.getUserInfo = (req, res, next) => {
-  console.log('getUserInfo', req);
   User.findById(req.user._id)
     .orFail(() => new NotFoundError('Пользователь с указанным id не существует'))
     .then((user) => res.send({ user }))
@@ -118,7 +117,6 @@ module.exports.updateAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  console.log('req in module.exports.login', req);
 
   return User.findOne({ email })
     .select('+password')

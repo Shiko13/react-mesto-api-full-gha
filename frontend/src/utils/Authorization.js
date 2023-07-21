@@ -32,8 +32,6 @@ registrate = (email, password) => {
 };
 
 checkToken(jwt) {
-  console.log('inside checkToken, jwt: ', jwt);
-  console.log('headers ', this.headers);
   return this._request(`${this.url}/users/me`, {
     method: "GET",
     headers: {
