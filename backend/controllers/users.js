@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const AuthorizationError = require('../errors/AuthorizationError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const DuplicateError = require('../errors/DuplicateError');
@@ -119,13 +120,42 @@ module.exports.updateAvatar = (req, res, next) => {
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
-  User.findUserByCredentials(email, password)
+  return User.findOne({ email })
+    .select('+password')
     .then((user) => {
-      res.send({
-        token: jwt.sign({ _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-          { expiresIn: '7d' }),
-      });
+      if (!user) {
+        return next(new AuthorizationError('Неправильно указан логин или пароль-4'));
+      }
+
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            return next(new AuthorizationError('Неправильно указан логин или пароль-5'));
+          }
+          const token = jwt.sign(
+            { _id: user._id },
+            NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+            { expiresIn: '7d' },
+          );
+
+          res.body = { token };
+
+          return res.send({ token });
+        });
     })
-    .catch(next);
+    .catch((error) => next(error));
 };
+
+// module.exports.login = (req, res, next) => {
+//   const { email, password } = req.body;
+
+//   User.findUserByCredentials(email, password)
+//     .then((user) => {
+//       res.send({
+//         token: jwt.sign({ _id: user._id },
+//           NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+//           { expiresIn: '7d' }),
+//       });
+//     })
+//     .catch(next);
+// };
