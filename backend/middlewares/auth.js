@@ -4,7 +4,7 @@ const AuthorizationError = require('../errors/AuthorizationError');
 
 const { JWT_SECRET = 'JWT_SECRET', NODE_ENV = 'production' } = process.env;
 
-module.exports.auth = (req, res, next) => {
+module.exports = (req, res, next) => {
   let token = req.headers.authorization || req.body.token || req.cookies.token;
 
   if (!token) {
