@@ -13,9 +13,6 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 const options = {
   origin: ['https://api.s-al-terentev.nomoredomains.work', 'http://s-al-terentev.nomoredomains.work', 'http://api.s-al-terentev.nomoredomains.work', 'https://s-al-terentev.nomoredomains.work'],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
@@ -23,6 +20,8 @@ const options = {
 };
 
 app.use(cors(options));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
