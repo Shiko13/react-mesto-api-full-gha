@@ -47,7 +47,7 @@ function App() {
           console.log(err);
         });
     }
-  }, [email]);
+  });
 
   useEffect(() => {
     if (isLoggedIn) {
