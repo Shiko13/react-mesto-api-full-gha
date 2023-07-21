@@ -81,7 +81,7 @@ module.exports.updateUser = (req, res, next) => {
       runValidators: true,
     },
   )
-    .then((user) => res.send({ user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Ошибка валидации'));

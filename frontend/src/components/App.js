@@ -53,7 +53,7 @@ function App() {
     if (isLoggedIn) {
       ApiConst.getCards()
         .then(({ cards }) => {
-          setCards(cards);
+          return setCards(cards);
         })
         .catch((err) => console.log(err));
      }
@@ -63,7 +63,9 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       ApiConst.getInfoAboutMe()
-        .then(({ user }) => setCurrentUser(user))
+        .then(({ user }) => { 
+          return setCurrentUser(user)
+        })
         .catch((err) => console.log(err));
      }
   },    
@@ -110,8 +112,10 @@ function App() {
   function handleUpdateUser(data) {
     ApiConst
       .updateProfileData(data)
-      .then((res) => setCurrentUser(res))
-      .then(() =>closeAllPopups())
+      .then((res) => {
+        return setCurrentUser(res)
+      })
+      .then(() => closeAllPopups())
       .catch((err) => console.log(err));
   }
 
@@ -119,7 +123,7 @@ function App() {
     ApiConst
       .updateProfileAvatar(data)
       .then((res) => {
-        setCurrentUser(res);
+        return setCurrentUser(res);
       })
       .then(() => {
         closeAllPopups();
