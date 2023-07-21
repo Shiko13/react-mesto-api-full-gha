@@ -1,47 +1,50 @@
-export const url = "https://api.s-al-terentev.nomoredomains.work";
+class Authorization {
+  constructor(data) {
+    this.url = data.baseUrl;
+    this.headers = data.headers;
+  }
 
-export const authorizate = (email, password) => {
-  return fetch(`${url}/signin`, {
+_request(url, options) {
+  return fetch(url, options).then(this._checkResponse);
+}
+
+_checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Error: ${res.status}`);
+}
+
+authorizate = (email, password) => {
+  return this._request(`${this._url}/signin`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: this.headers,
     body: JSON.stringify({ email, password }),
-  }).then((res) => checkResponse(res));
+  });
 };
 
-export const registrate = (email, password) => {
-  return fetch(`${url}/signup`, {
+registrate = (email, password) => {
+  return this._request(`${this._url}/signup`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: this.headers,
     body: JSON.stringify({ email, password }),
-  }).then((res) => checkResponse(res));
+  });
 };
 
-export const checkToken = (token) => {
-  return fetch(`${url}/users/me`, {
+checkToken(jwt) {
+  return this._request(`${this._url}/users/me`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      ...this.headers,
+      Authorization: `Bearer ${jwt}`
     },
   })
-    .then((res) => checkResponse(res))
-    .then((data) => data);
 };
+}
 
-const checkResponse = (res) => {
-  if (!res.ok) {
-    return res
-      .json()
-      .then((data) => ({
-        data: data,
-      }))
-      .then((res) => {
-        return Promise.reject(`Ошибка: ${res.data.error || res.data.message}`);
-      });
-  }
-  return res.json();
-};
+export const Auth = new Authorization({
+  baseUrl: "https://api.s-al-terentev.nomoredomains.work",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});

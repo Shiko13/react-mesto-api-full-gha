@@ -1,10 +1,14 @@
 class Api {
   constructor(data) {
-    this._url = data.baseUrl;
-    this._headers = data.headers;
+    this.url = data.baseUrl;
+    this.headers = data.headers;
   }
 
-  _getServerResponse(res) {
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
+  }
+
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
@@ -12,70 +16,69 @@ class Api {
   }
 
   addCard(newCardData) {
-    return fetch(`${this._url}/cards`, {
+    return this._request(`${this._url}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify({ name: newCardData.name, link: newCardData.link }),
-    }).then(this._getServerResponse);
+    });
   }
 
   getInfoAboutMe() {
-    return fetch(`${this._url}/users/me`, {
-      headers: this._headers,
-    }).then(this._getServerResponse);
+    return this._request(`${this._url}/users/me`, {
+      headers: this.headers,
+    });
   }
 
   getCards() {
-    return fetch(`${this._url}/cards`, {
-      headers: this._headers,
-    }).then(this._getServerResponse);
+    return this._request(`${this._url}/cards`, {
+      headers: this.headers,
+    });
   }
 
   updateProfileData(data) {
-    return fetch(`${this._url}/users/me`, {
+    return this._request(`${this._url}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify({ name: data.name, about: data.about }),
-    }).then(this._getServerResponse);
+    });
   }
 
   changeLikeCardStatus(id, isLiked) {
     if (!isLiked) {
-      return fetch(`${this._url}/cards/${id}/likes`, {
+      return this._request(`${this._url}/cards/${id}/likes`, {
         method: "PUT",
-        headers: this._headers,
-      }).then(this._getServerResponse);
+        headers: this.headers,
+      });
     } else {
-      return fetch(`${this._url}/cards/${id}/likes`, {
+      return this._request(`${this._url}/cards/${id}/likes`, {
         method: "DELETE",
         headers: this._headers,
-      }).then(this._getServerResponse);
+      });
     }
   }
 
   updateProfileAvatar(data) {
-    return fetch(`${this._url}/users/me/avatar`, {
+    return this._request(`${this._url}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify({
         avatar: data.avatar
       }),
-    }).then(this._getServerResponse);
+    });
   }
 
   deleteCard(cardId) {
-    return fetch(`${this._url}/cards/${cardId}`, {
+    return this._request(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
-    }).then(this._getServerResponse);
+      headers: this.headers,
+    });
   }
 }
 
-const api = new Api({
+export const ApiConst = new Api({
   baseUrl: "https://api.s-al-terentev.nomoredomains.work",
   headers: {
+    authorization: localStorage.getItem("JWT_SECRET"),
     "Content-Type": "application/json",
   },
 });
-
-export default api;

@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import { useEffect, useState } from "react";
 import ImagePopup from "./ImagePopup";
-import api from "../utils/Api";
+import { ApiConst } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -12,11 +12,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
-import {
-  registrate,
-  authorizate,
-  checkToken,
-} from "../utils/Authorization";
+import { Auth } from "../utils/Authorization";
 import success from "../images/success.svg";
 import error from "../images/error.svg";
 import Login from "./Login";
@@ -37,15 +33,13 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const jwt = localStorage.getItem("JWT_SECRET");
-    if (jwt) {
-      checkToken(jwt)
+    const token = localStorage.getItem("JWT_SECRET");
+    if (token && email == null) {
+      Auth.checkToken(token)
         .then((res) => {
           if (res) {
             setEmail(res.user.email);
-            localStorage.setItem("jwt", res.token);
             setIsLoggedIn(true);
-            console.log('inside checkToken');
             navigate("/", { replace: true });
           }
         })
@@ -57,12 +51,20 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([api.getInfoAboutMe(), api.getCards()])
-        .then(([currentUser, cards]) => {
-          console.log('currentUser:', currentUser);
-          console.log('cards:', cards);
-          setCurrentUser(currentUser);
+      ApiConst.getCards
+        .then(({ cards }) => {
           setCards(cards);
+        })
+        .catch((err) => console.log(err));
+     }
+  },    
+  [isLoggedIn]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      ApiConst.getInfoAboutMe
+        .then(({ user }) => {
+          setCurrentUser(user);
         })
         .catch((err) => console.log(err));
      }
@@ -88,7 +90,7 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
-    api
+    ApiConst
       .changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((state) =>
@@ -99,7 +101,7 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    api
+    ApiConst
       .deleteCard(card._id)
       .then((newCard) => {
         setCards((state) => state.filter((c) => c._id !== card._id));
@@ -108,7 +110,7 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    api
+    ApiConst
       .updateProfileData(data)
       .then((res) => {
         setCurrentUser(res);
@@ -120,7 +122,7 @@ function App() {
   }
 
   function handleUpdateAvatar(data) {
-    api
+    ApiConst
       .updateProfileAvatar(data)
       .then((res) => {
         setCurrentUser(res);
@@ -132,7 +134,7 @@ function App() {
   }
 
   function handleAddPlaceSubmit(data) {
-    api
+    ApiConst
       .addCard(data)
       .then((res) => {
         setCards([res, ...cards]);
@@ -144,7 +146,7 @@ function App() {
   }
 
   function handleRegistration(email, password) {
-    registrate(email, password)
+    Auth.registrate(email, password)
       .then(() => {
         setInfoTooltipImage(success);
         setInfoTooltipText("Вы успешно зарегистрировались!");
@@ -158,7 +160,7 @@ function App() {
   }
 
   function handleLogin(email, password) {
-    authorizate(email, password)
+    Auth.authorizate(email, password)
       .then((res) => {
         if (res.token) {
           localStorage.setItem("JWT_SECRET", res.token);
