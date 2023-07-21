@@ -79,7 +79,7 @@ module.exports.updateUser = (req, res, next) => {
       runValidators: true,
     },
   )
-    .then((user) => res.send({ user }))
+    .then(({ user }) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Ошибка валидации'));
@@ -145,17 +145,3 @@ module.exports.login = (req, res, next) => {
     })
     .catch((error) => next(error));
 };
-
-// module.exports.login = (req, res, next) => {
-//   const { email, password } = req.body;
-
-//   User.findUserByCredentials(email, password)
-//     .then((user) => {
-//       res.send({
-//         token: jwt.sign({ _id: user._id },
-//           NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-//           { expiresIn: '7d' }),
-//       });
-//     })
-//     .catch(next);
-// };

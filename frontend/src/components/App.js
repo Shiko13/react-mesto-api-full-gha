@@ -52,9 +52,7 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       ApiConst.getCards()
-        .then(({ cards }) => {
-          return setCards(cards);
-        })
+        .then(({ cards }) => setCards(cards))
         .catch((err) => console.log(err));
      }
   },    
@@ -63,8 +61,8 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       ApiConst.getInfoAboutMe()
-        .then(({ user }) => { 
-          return setCurrentUser(user)
+        .then((user) => { 
+          setCurrentUser(user)
         })
         .catch((err) => console.log(err));
      }
@@ -112,9 +110,7 @@ function App() {
   function handleUpdateUser(data) {
     ApiConst
       .updateProfileData(data)
-      .then((res) => {
-        return setCurrentUser(res)
-      })
+      .then((res) => setCurrentUser(res))
       .then(() => closeAllPopups())
       .catch((err) => console.log(err));
   }
