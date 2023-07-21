@@ -51,7 +51,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      ApiConst.getCards
+      ApiConst.getCards()
         .then(({ cards }) => {
           setCards(cards);
         })
@@ -62,7 +62,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      ApiConst.getInfoAboutMe
+      ApiConst.getInfoAboutMe()
         .then(({ user }) => {
           setCurrentUser(user);
         })
