@@ -13,11 +13,26 @@ require('dotenv').config();
 
 const app = express();
 
-// const options = {
-//   origin: ['https://api.s-al-terentev.nomoredomains.work', 'http://s-al-terentev.nomoredomains.work', 'http://api.s-al-terentev.nomoredomains.work', 'https://s-al-terentev.nomoredomains.work'],
-//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-// };
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE',
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+const options = {
+  origin: ['https://api.s-al-terentev.nomoredomains.work', 'https://s-al-terentev.nomoredomains.work'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(options));
 
 app.use(cors());
 app.use(bodyParser.json());

@@ -18,7 +18,9 @@ _checkResponse(res) {
 authorizate = (email, password) => {
   return this._request(`${this.url}/signin`, {
     method: "POST",
-    headers: this.headers,
+    headers: {
+      "Content-Type": "application/json",
+  },
     body: JSON.stringify({ email, password }),
   });
 };
@@ -26,7 +28,9 @@ authorizate = (email, password) => {
 registrate = (email, password) => {
   return this._request(`${this.url}/signup`, {
     method: "POST",
-    headers: this.headers,
+    headers: {
+      "Content-Type": "application/json",
+  },
     body: JSON.stringify({ email, password }),
   });
 };
@@ -35,7 +39,7 @@ checkToken(jwt) {
   return this._request(`${this.url}/users/me`, {
     method: "GET",
     headers: {
-      ...this.headers,
+      "Content-Type": "application/json",
       Authorization: `Bearer ${jwt}`
     },
   })
