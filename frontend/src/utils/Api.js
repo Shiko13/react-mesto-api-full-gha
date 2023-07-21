@@ -14,7 +14,7 @@ class Api {
     }
     return Promise.reject(`Error: ${res.status}`);
   }
-
+  
   addCard(newCardData) {
     return this._request(`${this.url}/cards`, {
       method: "POST",
