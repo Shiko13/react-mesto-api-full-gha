@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
-// const cors = require('cors');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./errors/ErrorHandler');
 const routes = require('./routes/index');
@@ -32,7 +32,7 @@ const app = express();
 //   allowedHeaders: ['Content-Type', 'Authorization'],
 // };
 
-// app.use(cors());
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
