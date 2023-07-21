@@ -37,7 +37,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
+    const jwt = localStorage.getItem("JWT_SECRET");
     if (jwt) {
       checkToken(jwt)
         .then((res) => {
@@ -161,7 +161,7 @@ function App() {
     authorizate(email, password)
       .then((res) => {
         if (res.token) {
-          localStorage.setItem("jwt", res.token);
+          localStorage.setItem("JWT_SECRET", res.token);
           setIsLoggedIn(true);
           setEmail(email);
           navigate("/", { replace: true });
@@ -175,7 +175,7 @@ function App() {
   }
 
   function handleSignOut() {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("JWT_SECRET");
     setEmail("");
     setIsLoggedIn(false);
     navigate("/signin", { replace: true });

@@ -7,12 +7,7 @@ export const authorizate = (email, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then((res) => {
-    if (res.token) {
-      localStorage.setItem('token', res.token);
-      return res.token;
-    }
-  });
+  }).then((res) => checkResponse(res));
 };
 
 export const registrate = (email, password) => {

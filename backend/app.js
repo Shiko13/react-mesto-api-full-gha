@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const errorHandler = require('./errors/ErrorHandler');
 const routes = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -53,6 +54,7 @@ const limiter = rateLimit({
 
 app.use(limiter);
 app.use(helmet());
+app.use(cookieParser());
 app.use(requestLogger);
 app.use(routes);
 app.use(errorLogger);
