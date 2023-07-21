@@ -52,7 +52,7 @@ class Api {
     } else {
       return this._request(`${this.url}/cards/${id}/likes`, {
         method: "DELETE",
-        headers: this._headers,
+        headers: this.headers,
       });
     }
   }
