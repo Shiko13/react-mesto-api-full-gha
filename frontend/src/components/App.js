@@ -63,9 +63,7 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       ApiConst.getInfoAboutMe()
-        .then(({ user }) => {
-          setCurrentUser(user);
-        })
+        .then(({ user }) => setCurrentUser(user))
         .catch((err) => console.log(err));
      }
   },    
@@ -112,12 +110,8 @@ function App() {
   function handleUpdateUser(data) {
     ApiConst
       .updateProfileData(data)
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .then(() => {
-        closeAllPopups();
-      })
+      .then((res) => setCurrentUser(res))
+      .then(() =>closeAllPopups())
       .catch((err) => console.log(err));
   }
 
@@ -164,6 +158,7 @@ function App() {
       .then((res) => {
         if (res.token) {
           localStorage.setItem("JWT_SECRET", res.token);
+          ApiConst.setToken(res.token);
           setIsLoggedIn(true);
           setEmail(email);
           navigate("/", { replace: true });

@@ -2,9 +2,12 @@ class Api {
   constructor(data) {
     this.url = data.baseUrl;
     this.headers = data.headers;
+    this.token = data.token;
   }
 
   _request(url, options) {
+    console.log('url', url);
+    console.log('options', options);
     return fetch(url, options).then(this._checkResponse);
   }
 
@@ -14,6 +17,11 @@ class Api {
     }
     return Promise.reject(`Error: ${res.status}`);
   }
+
+  setToken(token) {
+    this.token = token;
+    this.headers.authorization = `Bearer ${token}`;
+}
   
   addCard(newCardData) {
     return this._request(`${this.url}/cards`, {
@@ -24,12 +32,14 @@ class Api {
   }
 
   getInfoAboutMe() {
+    console.log('getInfoAboutMe(), headers: ', this.headers);
     return this._request(`${this.url}/users/me`, {
       headers: this.headers,
     });
   }
 
   getCards() {
+    console.log('getCards(), headers: ', this.headers);
     return this._request(`${this.url}/cards`, {
       headers: this.headers,
     });
@@ -78,7 +88,6 @@ class Api {
 export const ApiConst = new Api({
   baseUrl: "https://api.s-al-terentev.nomoredomains.work",
   headers: {
-    authorization: localStorage.getItem("JWT_SECRET"),
     "Content-Type": "application/json",
   },
 });
