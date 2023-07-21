@@ -47,7 +47,7 @@ function App() {
           console.log(err);
         });
     }
-  });
+  }, [email]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -110,8 +110,10 @@ function App() {
   function handleUpdateUser(data) {
     ApiConst
       .updateProfileData(data)
-      .then((res) => setCurrentUser(res))
-      .then(() => closeAllPopups())
+      .then((res) => { 
+        setCurrentUser(res);
+        closeAllPopups();
+      })
       .catch((err) => console.log(err));
   }
 
