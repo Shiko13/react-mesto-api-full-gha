@@ -128,7 +128,7 @@ function App() {
     ApiConst
       .addCard({ name, link })
       .then((res) => {
-        setCards([res, ...cards]);
+        setCards([...cards, res]);
         closeAllPopups();
       })
       .catch((err) => { 
