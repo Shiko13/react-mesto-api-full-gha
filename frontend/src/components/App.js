@@ -87,7 +87,7 @@ function App() {
 
     ApiConst
       .changeLikeCardStatus(card._id, isLiked)
-      .then(({ newCard }) => {
+      .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
         );
