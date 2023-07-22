@@ -4,9 +4,9 @@ const validator = require('validator');
 const cardSchema = new mongoose.Schema({
   name: {
     type: String,
-    minLength: 2,
-    maxLength: 30,
-    required: true,
+    minLength: [2, 'Минимум 2 символа'],
+    maxLength: [30, 'Максимум 30 символов'],
+    required: [true, 'Данное поле должно быть заполнено'],
   },
   link: {
     type: String,
