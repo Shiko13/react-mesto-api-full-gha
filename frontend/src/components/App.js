@@ -40,6 +40,7 @@ function App() {
           if (res) {
             setIsLoggedIn(true);
             ApiConst.setToken(token);
+            setEmail(res.user.email);
             navigate("/", { replace: true });
           }
         })
@@ -161,7 +162,7 @@ function App() {
       })
       .catch((err) => {
         setIsInfoTooltipPopupOpen(true);
-        setInfoTooltipImage(err);
+        setInfoTooltipImage(error);
         setInfoTooltipText("Что-то пошло не так. Попробуйте ещё раз.");
       });
   }
