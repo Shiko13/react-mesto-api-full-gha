@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const cardSchema = new mongoose.Schema({
+const cardSchema = mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Данное поле должно быть заполнено'],
