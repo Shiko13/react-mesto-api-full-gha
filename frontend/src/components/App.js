@@ -162,7 +162,7 @@ function App() {
       .catch((err) => {
         setIsInfoTooltipPopupOpen(true);
         setInfoTooltipImage(err);
-        setInfoTooltipText("Что-то пошло не так! Попробуйте ещё раз.");
+        setInfoTooltipText("Что-то пошло не так. Попробуйте ещё раз.");
       });
   }
 
