@@ -124,13 +124,11 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleAddPlaceSubmit(data) {
+  function handleAddPlaceSubmit({ name, link }) {
     ApiConst
-      .addCard(data)
+      .addCard({ name, link })
       .then((res) => {
         setCards([res, ...cards]);
-      })
-      .then(() => {
         closeAllPopups();
       })
       .catch((err) => console.log(err));

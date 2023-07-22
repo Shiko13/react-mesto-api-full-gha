@@ -25,7 +25,7 @@ class Api {
     return this._request(`${this.url}/cards`, {
       method: "POST",
       headers: this.headers,
-      body: JSON.stringify({ name: newCardData.name, link: newCardData.link }),
+      body: JSON.stringify(newCardData),
     });
   }
 

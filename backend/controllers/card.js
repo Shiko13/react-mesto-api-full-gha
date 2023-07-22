@@ -30,9 +30,9 @@ module.exports.createCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Неверные данные'));
-      } else {
-        next(err);
+        return;
       }
+      next(err);
     });
 };
 
