@@ -59,7 +59,7 @@ function App() {
     Promise.all([ApiConst.getCards(), ApiConst.getInfoAboutMe()])
       .then(([{ cards }, user]) => {
         setCards(cards);
-        setCurrentUser(user);
+        setCurrentUser(user.user);
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +87,7 @@ function App() {
 
     ApiConst
       .changeLikeCardStatus(card._id, isLiked)
-      .then((newCard) => {
+      .then(({ newCard }) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
         );
@@ -108,7 +108,7 @@ function App() {
     ApiConst
       .updateProfileData(data)
       .then((res) => { 
-        setCurrentUser(res);
+        setCurrentUser(res.user);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
@@ -118,9 +118,7 @@ function App() {
     ApiConst
       .updateProfileAvatar(data)
       .then((res) => {
-        return setCurrentUser(res);
-      })
-      .then(() => {
+        setCurrentUser(res.user);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
