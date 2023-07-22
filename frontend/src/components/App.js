@@ -131,9 +131,7 @@ function App() {
         setCards([res, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => { 
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }
 
   function handleRegistration(email, password) {
